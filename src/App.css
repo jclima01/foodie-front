@@ -1,0 +1,12 @@
+.App {
+  background-image: url("https://img.freepik.com/foto-gratis/composicion-flat-lay-panaderia-copyspace_23-2148189370.jpg?w=1380&t=st=1682805399~exp=1682805999~hmac=1747fe6ec15ad5353e0e1c6b61b4d8e5077bfc448c66c629cdfce80bd38d560f") ;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.homeContainer {
+  display: flex;
+  flex-direction: row;
+}

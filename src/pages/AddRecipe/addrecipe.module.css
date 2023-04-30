@@ -1,0 +1,52 @@
+.pageContainer {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addRecipeContainer {
+  display: flex;
+  width: 50vw;
+  height: 85vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #e2a8b981;
+}
+
+.formContainer {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkboxs {
+}
+.btn {
+  color: #5f00cc;
+
+  border: 2px solid #5f00cc;
+  border-radius: 6px;
+  padding: 16px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.btn:hover {
+  background-color: #5f00cc;
+  color: white;
+}

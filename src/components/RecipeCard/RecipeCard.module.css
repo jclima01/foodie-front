@@ -1,0 +1,67 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 180px;
+  height: auto;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 15px auto;
+  border: 1px solid #00000046;
+  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.253);
+  border-radius: 0.3em;
+  background-color: #f1cbcbe1;
+  cursor: pointer;
+}
+
+.img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+.dietsContainer {
+  width: 100%;
+  height: auto;
+  font-weight: 200;
+  font-size: 8px;
+  display: flex;
+  flex-direction: row;
+  color: #970130dc;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  margin-top: -12px;
+}
+
+.diet {
+  margin: 5px;
+  font-size: 9px;
+  text-align: left;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 12px;
+  display: flex;
+  justify-content: left;
+  text-align: left;
+  color: #1b1b1bd2;
+}
+
+.healthScore {
+  font-weight: 900;
+  margin-top: -4px;
+  font-size: 8px;
+  color: #1b1b1b;
+  text-align: left;
+}
+
+.dietsTitleContainer {
+  background-color: #c7adad80;
+  max-height: max-content;
+  width: 100%;
+  justify-content: space-between;
+}

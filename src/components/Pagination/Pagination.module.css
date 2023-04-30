@@ -1,0 +1,20 @@
+.paginationContainer {
+  height: 5vh;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.btn {
+  border-radius: 3px;
+  background-color: #f1cbcb6b;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #bb36019f;
+}
+.btnSelected {
+  background-color: #bb36019f;
+}

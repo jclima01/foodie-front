@@ -1,0 +1,19 @@
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 5vh;
+  padding: 10px;
+
+}
+.img {
+  height: 100%;
+  width: auto;
+  margin-left: 50px;
+}
+
+.searchBar{
+  margin-right: 160px;
+}
+
+ 
