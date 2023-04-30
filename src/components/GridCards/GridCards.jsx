@@ -4,7 +4,7 @@ import s from "./GridCards.module.css";
 import { useSelector } from "react-redux";
 
 const GridCards = ({ recipes }) => {
-  const loading = useSelector(state => state.loading)
+  
   return (
     <>
       <div className={s.cardsContainer}>
