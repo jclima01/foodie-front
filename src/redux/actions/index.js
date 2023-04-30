@@ -27,6 +27,7 @@ export const setSearchKey = (searchKey) => {
 };
 
 export const getRecipes = () => {
+  console.log("soy get recipes")
   try {
     return async function (dispatch) {
       const response = await axios.get("https://foodie-back-5zy4.onrender.com/recipes");

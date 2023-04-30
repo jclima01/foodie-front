@@ -9,19 +9,22 @@ const Home = () => {
   const searchKey = useSelector((state) => state.searchKey);
   // const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
+
   const [actualPage, setActualPage] = useState(1);
   const [recipesPerPage, setRecipesPerPage] = useState(9);
 
   const lastRecipeIndex = actualPage * recipesPerPage;
+
   const firstRecipeIndex = lastRecipeIndex - recipesPerPage;
+
   const recipeSlice = recipes.slice(firstRecipeIndex, lastRecipeIndex);
   
 
 
-
+console.log(searchKey)
   useEffect(() => {
     if (!searchKey) dispatch(getRecipes());
-
+    console.log("soy el use effect")
   }, [dispatch,searchKey]);
   return (
     <div className={styles.homeContainer}>
