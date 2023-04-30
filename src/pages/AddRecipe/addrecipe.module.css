@@ -28,25 +28,19 @@
   align-items: center;
 }
 
-.checkboxs {
-}
-.btn {
-  color: #5f00cc;
 
-  border: 2px solid #5f00cc;
-  border-radius: 6px;
-  padding: 16px 32px;
-  text-align: center;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
+.btn {
+  border-radius: 4px;
+  font-style: bold;
+  width: 200px;
+  height: 30px;
+  background: #ec9595a4;
   cursor: pointer;
-  text-decoration: none;
-  text-transform: uppercase;
+
+  font-weight: 700;
+  font-size: 15px;
+  color: #1b1b1bd2;
 }
 .btn:hover {
-  background-color: #5f00cc;
-  color: white;
+  background: #bb36019f;
 }

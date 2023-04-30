@@ -1,7 +1,11 @@
 import React from "react";
-
+import s from "./Loading.module.css";
 const Loading = () => {
-  return <img src="https://loading.io/asset/657596" alt="Loading" />;
+  return (
+    <div className={s.loaderContainer}>
+      <div className={s.loader}></div>
+    </div>
+  );
 };
 
 export default Loading;

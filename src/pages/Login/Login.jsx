@@ -11,7 +11,7 @@ const Login = () => {
 
   return (
     <div className={s.loginContainer}>
-      <button onClick={handleClick}>Log in</button>
+      <button onClick={handleClick} className={s.btn}>Log in</button>
     </div>
   );
 };

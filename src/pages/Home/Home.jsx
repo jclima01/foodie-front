@@ -12,7 +12,8 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const [actualPage, setActualPage] = useState(1);
-  const [recipesPerPage, setRecipesPerPage] = useState(9);
+  const recipesPerPage = 9;
+  // const [recipesPerPage, setRecipesPerPage] = useState(9);
 
   const lastRecipeIndex = actualPage * recipesPerPage;
 
@@ -21,17 +22,26 @@ const Home = () => {
   const recipeSlice = recipes.slice(firstRecipeIndex, lastRecipeIndex);
 
   useEffect(() => {
-    if (!searchKey) dispatch(getRecipes());
+    if (!searchKey) {
+      dispatch(getRecipes());
+    }
   }, [dispatch, searchKey]);
 
   return (
     <div className={styles.homeContainer}>
-      <Pagination
-        recipesPerPage={recipesPerPage}
-        recipes={recipes.length}
-        pagination={setActualPage}
-      />
-      {recipes ? <GridCards recipes={recipeSlice} /> : <Loading />}
+      {loading ? (
+        <Loading />
+        ) : (
+          <>
+          <Pagination
+            recipesPerPage={recipesPerPage}
+            recipes={recipes.length}
+            pagination={setActualPage}
+          />
+          <GridCards recipes={recipeSlice} />
+        </>
+      )}
+      {/* <Loading /> */}
     </div>
   );
 };

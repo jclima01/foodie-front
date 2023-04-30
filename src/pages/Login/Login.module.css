@@ -1,7 +1,22 @@
 .loginContainer {
-  background-image: url("https://img.freepik.com/foto-gratis/ingredientes-muffins-cupcake-manzana-dulce-azucar-mantequilla-harina-miel-canela-huevos-sobre-fondo-claro-piedra_127032-2718.jpg?w=1380&t=st=1682800013~exp=1682800613~hmac=004d3f9f84abd8fbeb95a00ab904aa0af2ef3f1a1c500ba985c920cf95e44d17");
-  background-repeat: no-repeat;
-  background-size: cover;
   width: 100%;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  border-radius: 4px;
+  font-style: bold;
+  width: 200px;
+  height: 30px;
+  background: #ec9595a4;
+  cursor: pointer;
+
+  font-weight: 700;
+  font-size: 15px;
+  color: #1b1b1bd2;
+}
+.btn:hover {
+  background: #bb36019f;
 }

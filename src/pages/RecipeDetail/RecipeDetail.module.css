@@ -1,6 +1,7 @@
 .detailContainer {
   height: 90vh;
   width: 80vw;
+  margin-left:30vw;
   display: flex;
   flex-direction: row;
   position: relative;
@@ -58,8 +59,20 @@ border-radius: 5px;
   gap: 10px;
 }
 
+
 .btn {
+  border-radius: 4px;
+  font-style: bold;
   position: absolute;
   top: 0;
   right: 0;
+  background: #ec9595a4;
+  cursor: pointer;
+
+  font-weight: 700;
+  font-size: 15px;
+  color: #1b1b1bd2;
+}
+.btn:hover {
+  background: #bb36019f;
 }

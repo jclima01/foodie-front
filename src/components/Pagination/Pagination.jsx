@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import s from "./Pagination.module.css";
 
 export default function Pagination({ recipesPerPage, recipes, pagination }) {
@@ -11,7 +11,6 @@ export default function Pagination({ recipesPerPage, recipes, pagination }) {
     pagination(num);
     setPage(num);
   };
-  console.log(page);
 
   return (
     <div className={s.paginationContainer}>

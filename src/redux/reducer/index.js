@@ -11,7 +11,7 @@ import {
   DIET_FILTER,
   SCORE_SORT,
   GET_RECIPES_FROM_DB_OR_DB,
-  LOADING
+  CLEAN_RECIPE,
 } from "../actions";
 
 const initialState = {
@@ -23,14 +23,18 @@ const initialState = {
   recipesFromApi: [],
   recipesFromDB: [],
   loading: true,
+  loadingDetail: true,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case LOADING:
-      return {
+    case CLEAN_RECIPE:
+      return{
         ...state,
-        loading: payload
+        recipe: {},
+        recipes: [],
+        loading: true,
+        loadingDetail: true
       }
     case SCORE_SORT:
       let sortedByScore = [...state.recipes];
@@ -45,10 +49,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ? state.recipes.sort(function (a, b) {
               if (a.healthScore > b.healthScore) return 1;
               if (a.healthScore < b.healthScore) return -1;
+              return 0;
             })
           : state.recipes.sort(function (a, b) {
               if (a.healthScore < b.healthScore) return 1;
               if (a.healthScore > b.healthScore) return -1;
+              return 0;
             });
       return {
         ...state,
@@ -83,10 +89,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ? sortedRecipes.sort(function (a, b) {
               if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
               if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
+              return 0;
             })
           : sortedRecipes.sort(function (a, b) {
               if (a.title.toLowerCase() < b.title.toLowerCase()) return 1;
               if (a.title.toLowerCase() > b.title.toLowerCase()) return -1;
+              return 0;
             });
       return {
         ...state,
@@ -102,6 +110,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         recipes: [...payload],
         allRecipes: [...payload],
+        loading: false,
       };
     case ADD_RECIPE:
       return {
@@ -113,16 +122,19 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         diets: [...payload],
+        loading: false,
       };
     case GET_RECIPES_BY_QUERY:
       return {
         ...state,
         recipes: [...payload],
+        loading: false,
       };
     case GET_RECIPES_BY_ID:
       return {
         ...state,
         recipe: { ...payload },
+        loadingDetail: false,
       };
     case GET_RECIPES_FROM_DB_OR_DB:
       const allRecipes = [...state.allRecipes];
@@ -132,20 +144,24 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return {
           ...state,
           recipes: [...state.allRecipes],
+          loading: false,
         };
       }
       if (payload === "api") {
         return {
           ...state,
           recipes: [...recipesFromApi],
+          loading: false,
         };
       }
       if (payload === "db") {
         return {
           ...state,
           recipes: [...recipesFromDb],
+          loading: false,
         };
       }
+      break;
     default:
       return {
         ...state,

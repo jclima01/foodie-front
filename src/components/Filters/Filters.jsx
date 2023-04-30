@@ -5,19 +5,15 @@ import {
   getDiets,
   getRecipesFromApiorDB,
   scoreSort,
-  setLoading,
 } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./Filters.module.css";
-import Loading from "../Loading/Loading";
 const Filters = () => {
   const diets = useSelector((state) => state.diets);
-  const loading = useSelector((state) => state.loading);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDiets());
-    dispatch(setLoading(false));
   }, [dispatch]);
 
   function handleDietTypeFilter(e) {
@@ -49,9 +45,7 @@ const Filters = () => {
       <label className={s.label}>Diets:</label>
       <select name="diets" onChange={(e) => handleDietTypeFilter(e)} className={s.select}>
         <option value="reset"></option>
-        {loading ? (
-          <Loading />
-        ) : (
+        {
           diets?.map((diet) => {
             return (
               <option key={diet.id} value={diet.name}>
@@ -59,7 +53,7 @@ const Filters = () => {
               </option>
             );
           })
-        )}
+        }
       </select>
       <label className={s.label}>Health Score:</label>
       <select name="score" onChange={(e) => handleScoreSort(e)} className={s.select}>

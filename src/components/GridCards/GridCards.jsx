@@ -1,7 +1,6 @@
 import React from "react";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import s from "./GridCards.module.css";
-import { useSelector } from "react-redux";
 
 const GridCards = ({ recipes }) => {
   
