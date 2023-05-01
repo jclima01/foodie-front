@@ -32,7 +32,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return{
         ...state,
         recipe: {},
-        recipes: [],
         loading: true,
         loadingDetail: true
       }
