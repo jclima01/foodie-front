@@ -3,8 +3,10 @@ import {
   aplhabeticalSort,
   dietFilter,
   getDiets,
+  getRecipes,
   getRecipesFromApiorDB,
   scoreSort,
+  setLoading,
 } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./Filters.module.css";
@@ -74,7 +76,8 @@ const Filters = () => {
       score: false,
       source: false
     });
-
+    dispatch(setLoading(true))
+    dispatch(getRecipes())
 
   };
 

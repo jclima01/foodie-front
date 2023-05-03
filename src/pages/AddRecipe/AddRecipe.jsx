@@ -21,11 +21,12 @@ const AddRecipe = () => {
     diets: [],
   });
   const [errors, setErrors] = useState({
-    title: "",
-    image: "",
-    summary: "",
-    healthScore: "",
+    title: "Enter recipe title",
+    image: "Enter image url",
+    summary: "Enter a summary",
+    healthScore: "Enter score",
     steps: "",
+    diets: "",
   });
 
   useEffect(() => {
@@ -33,33 +34,26 @@ const AddRecipe = () => {
   }, [dispatch]);
 
   const handleInputChange = (e) => {
-    if (e.target.name === "healthScore") {
-      setPayload({
-        ...payload,
-        [e.target.name]: parseInt(e.target.value),
-      });
-      setErrors(
-        validation({
-          ...payload,
-          [e.target.name]: e.target.value,
-        })
-      );
-    } else {
-      setPayload({
+    setPayload({
+      ...payload,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validation({
         ...payload,
         [e.target.name]: e.target.value,
-      });
-      setErrors(
-        validation({
-          ...payload,
-          [e.target.name]: e.target.value,
-        })
-      );
-    }
+      })
+    );
   };
 
   const handleStepInputChange = (e) => {
     setStepsInput(e.target.value);
+    setErrors(
+      validation({
+        ...payload,
+        steps: [...payload.steps, { number: counter, step: stepsInput }],
+      })
+    );
   };
 
   const handleSubmit = (e) => {
@@ -85,9 +79,16 @@ const AddRecipe = () => {
       ...payload,
       steps: [...payload.steps, { number: counter, step: stepsInput }],
     });
-
+    setErrors(
+      validation({
+        ...payload,
+        steps: [...payload.steps, { number: counter, step: stepsInput }],
+      })
+    );
+    
     setStepsInput("");
   };
+
 
   return (
     <div className={s.pageContainer}>
@@ -108,7 +109,7 @@ const AddRecipe = () => {
               onChange={handleInputChange}
               className={s.input}
             />
-            {errors.title && <p>{errors.title}</p>}
+            {errors.title && <p className={s.warning}>{errors.title}</p>}
 
             <label htmlFor="image">Image:</label>
             <input
@@ -120,7 +121,7 @@ const AddRecipe = () => {
               onChange={handleInputChange}
               className={s.input}
             />
-            {errors.image && <p>{errors.image}</p>}
+            {errors.image && <p className={s.warning}>{errors.image}</p>}
 
             <label text="summary" htmlFor="summary">
               Resumen:
@@ -134,7 +135,7 @@ const AddRecipe = () => {
               onChange={handleInputChange}
               className={s.input}
             />
-            {errors.summary && <p>{errors.summary}</p>}
+            {errors.summary && <p className={s.warning}>{errors.summary}</p>}
 
             <label text="healthScore" htmlFor="healthScore">
               healthScore:
@@ -148,7 +149,7 @@ const AddRecipe = () => {
               onChange={handleInputChange}
               className={s.input}
             />
-            {errors.healthScore && <p>{errors.healthScore}</p>}
+            {errors.healthScore && <p className={s.warning}>{errors.healthScore}</p>}
 
             <label text="steps" htmlFor="steps">
               Steps:
@@ -166,9 +167,9 @@ const AddRecipe = () => {
               <button onClick={addStep} className={s.btn1}>
                 +
               </button>
-              {errors.steps && <p>{errors.steps}</p>}
             </div>
           </div>
+          {errors.steps && <p className={s.warning}>{errors.steps}</p>}
           <div className={s.checkboxs}>
             {diets?.map((diet) => {
               return (
@@ -188,11 +189,29 @@ const AddRecipe = () => {
                             { id: diet.id, name: diet.name },
                           ],
                         });
+                        setErrors(
+                          validation({
+                            ...payload,
+                            diets: [
+                              ...payload.diets,
+                              { id: diet.id, name: diet.name },
+                            ],
+                          })
+                        );
                       } else {
                         setPayload({
                           ...payload,
                           diets: payload.diets.filter((d) => d.id !== diet.id),
                         });
+                        setErrors(
+                          validation({
+                            ...payload,
+                            diets: [
+                              ...payload.diets,
+                              { id: diet.id, name: diet.name },
+                            ],
+                          })
+                        );
                       }
                     }}
                   />
@@ -202,10 +221,23 @@ const AddRecipe = () => {
                 </div>
               );
             })}
+            {errors.diets && <p className={s.warning}>{errors.diets}</p>}
           </div>
-          <button className={s.btn} type="submit" >
-            Crear Receta
-          </button>
+
+          {errors.title ||
+          errors.image ||
+          errors.summary ||
+          errors.healthScore ||
+          errors.steps ||
+          errors.diets ? (
+            <button className={s.btn} disabled type="submit">
+              Crear Receta
+            </button>
+          ) : (
+            <button className={s.btn}  type="submit">
+              Crear Receta
+            </button>
+          )}
         </form>
       </div>
     </div>
