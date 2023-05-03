@@ -4,13 +4,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import SearchBar from "../SearchBar/SearchBar";
 import { useDispatch } from "react-redux";
-import { cleanRecipe, cleanStates } from "../../redux/actions";
+import { cleanRecipe, cleanStates, getRecipes, setLoading } from "../../redux/actions";
 const Nav = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const returnHome = (e) => {
     e.preventDefault()
+    dispatch(setLoading(true))
+    dispatch(cleanRecipe())
+    dispatch(getRecipes())
     navigate("/home")
   };
   const logout = (e) => {

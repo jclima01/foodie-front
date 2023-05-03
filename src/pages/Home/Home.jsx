@@ -22,17 +22,19 @@ const Home = () => {
   const recipeSlice = recipes.slice(firstRecipeIndex, lastRecipeIndex);
 
   useEffect(() => {
-    if (!searchKey) {
-      dispatch(getRecipes());
-      
-    }
+    if (recipeSlice.length === 0) dispatch(getRecipes());
   }, []);
 
+  const handleButton = (e) => {
+    e.preventDefault();
+    dispatch(setLoading(true));
+    if (recipeSlice.length === 0) dispatch(getRecipes());
+  };
   return (
     <div className={styles.homeContainer}>
       {loading ? (
         <Loading />
-      ) : (
+      ) : recipeSlice.length !== 0 ? (
         <>
           <Pagination
             recipesPerPage={recipesPerPage}
@@ -40,6 +42,11 @@ const Home = () => {
             pagination={setActualPage}
           />
           <GridCards recipes={recipeSlice} />
+        </>
+      ) : (
+        <>
+          <h1>Recipes not found</h1>
+          <button onClick={handleButton}>All Recipes</button>
         </>
       )}
     </div>

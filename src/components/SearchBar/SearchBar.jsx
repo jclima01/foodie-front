@@ -26,7 +26,7 @@ const SearchBar = () => {
         name="input"
         className={styles.input}
         onChange={handleInputChange}
-        placeholder="Busca tu receta..."
+        placeholder="Search recipes..."
         ref={inputRef}
         
       />

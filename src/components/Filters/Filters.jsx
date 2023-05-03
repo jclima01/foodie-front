@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   aplhabeticalSort,
-  cleanRecipe,
   dietFilter,
   getDiets,
-  getRecipes,
   getRecipesFromApiorDB,
   scoreSort,
-  setLoading,
 } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./Filters.module.css";
@@ -67,10 +64,10 @@ const Filters = () => {
 
   const resetFilters = (e) => {
     e.preventDefault();
-    alphabeticalRef.current.value = "";
-    dietsRef.current.value = "";
-    scoreRef.current.value = "";
-    sourceRef.current.value = "";
+    alphabeticalRef.current.value = "reset";
+    dietsRef.current.value = "reset";
+    scoreRef.current.value = "reset";
+    sourceRef.current.value = "reset";
     setIsDistabled({
       alphabetical: false,
       diets: false,
@@ -78,7 +75,7 @@ const Filters = () => {
       source: false
     });
 
-    dispatch(setLoading(true));
+
   };
 
 

@@ -129,19 +129,19 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         recipe: {},
       };
-      case SET_LOADING:
-        return{
-          ...state,
-          loading: payload
-        }
-      case CLEAN_STATES:
-        return {
-          recipes: [],
-          diets: [],
-          recipe: {},
-          searchKey: "",
-          loading: true,
-        }
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: payload,
+      };
+    case CLEAN_STATES:
+      return {
+        recipes: [],
+        diets: [],
+        recipe: {},
+        searchKey: "",
+        loading: true,
+      };
     default:
       return {
         ...state,

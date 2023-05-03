@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { cleanRecipe, cleanStates, getRecipeById } from "../../redux/actions";
+import { getRecipeById } from "../../redux/actions";
 
 import s from "./RecipeDetail.module.css";
 import Loading from "../../components/Loading/Loading";
@@ -17,7 +17,7 @@ const RecipeDetail = () => {
 
   const handleButton = (e) => {
     e.preventDefault();
-    dispatch(cleanStates());
+    // dispatch(cleanStates());
     navigate("/home");
   };
 
