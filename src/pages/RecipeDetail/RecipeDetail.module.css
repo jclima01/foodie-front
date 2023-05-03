@@ -1,7 +1,7 @@
 .firstContainer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   height: 83vh;
   
@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: row;
   position: relative;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   align-self: center;
   gap: 20px;
