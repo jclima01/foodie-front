@@ -135,7 +135,7 @@ const Filters = () => {
         <option value="api">Api</option>
         <option value="db">Db</option>
       </select>
-      <button onClick={resetFilters} className={s.btn}> reset filters</button>
+      <button onClick={resetFilters} className={s.btn}>Reset filters</button>
     </div>
   );
 };

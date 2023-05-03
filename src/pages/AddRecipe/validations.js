@@ -7,8 +7,8 @@ export const validation = (payload) => {
     errors.image = "La receta debe tener una url par la imagen";
   if (!payload.summary)
     errors.summary = "La receta debe tener un summary";
-  if (!payload.healthScore)
-    errors.healthScore = "La receta debe tener un healthScore";
+  if (typeof payload.healthScore !== "number")
+    errors.healthScore = "healthScore is a number";
 
   return errors;
 };

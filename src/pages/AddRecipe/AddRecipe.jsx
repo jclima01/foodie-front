@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import { validation } from "./validations.js";
 import s from "./addrecipe.module.css";
-import { addRecipe, getDiets } from "../../redux/actions/index.js";
+import { addRecipe, getDiets, setLoading } from "../../redux/actions/index.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { validation } from "./validations.js";
@@ -16,7 +16,7 @@ const AddRecipe = () => {
     title: "",
     image: "",
     summary: "",
-    healthScore: "",
+    healthScore: 0,
     steps: [],
     diets: [],
   });
@@ -33,16 +33,29 @@ const AddRecipe = () => {
   }, [dispatch]);
 
   const handleInputChange = (e) => {
-    setPayload({
-      ...payload,
-      [e.target.name]: e.target.value,
-    });
-    setErrors(
-      validation({
+    if (e.target.name === "healthScore") {
+      setPayload({
+        ...payload,
+        [e.target.name]: parseInt(e.target.value),
+      });
+      setErrors(
+        validation({
+          ...payload,
+          [e.target.name]: e.target.value,
+        })
+      );
+    } else {
+      setPayload({
         ...payload,
         [e.target.name]: e.target.value,
-      })
-    );
+      });
+      setErrors(
+        validation({
+          ...payload,
+          [e.target.name]: e.target.value,
+        })
+      );
+    }
   };
 
   const handleStepInputChange = (e) => {
@@ -51,6 +64,7 @@ const AddRecipe = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
     dispatch(
       addRecipe(
         payload.title,
@@ -63,7 +77,7 @@ const AddRecipe = () => {
     );
     navigate("/home");
   };
-
+  console.log(payload.healthScore);
   const addStep = (e) => {
     e.preventDefault();
     setCounter(counter + 1);
@@ -79,29 +93,32 @@ const AddRecipe = () => {
     <div className={s.pageContainer}>
       <div className={s.addRecipeContainer}>
         <h1>Crea tu nueva receta:</h1>
-        <form onSubmit={handleSubmit}>
+
+        <form onSubmit={handleSubmit} className={s.formContainer}>
           <div className={s.inputs}>
             <label text="title" htmlFor="title">
-              Título:
+              Title:
             </label>
             <input
               name="title"
               id="title"
-              placeholder="Título de la receta"
+              placeholder="Recipe title"
               type="text"
               value={payload.title}
               onChange={handleInputChange}
+              className={s.input}
             />
             {errors.title && <p>{errors.title}</p>}
 
-            <label htmlFor="image">Imagen:</label>
+            <label htmlFor="image">Image:</label>
             <input
               name="image"
               id="image"
-              placeholder="Ingresa la URL de la imagen"
+              placeholder="Url image"
               type="text"
               value={payload.image}
               onChange={handleInputChange}
+              className={s.input}
             />
             {errors.image && <p>{errors.image}</p>}
 
@@ -111,15 +128,16 @@ const AddRecipe = () => {
             <input
               name="summary"
               id="summary"
-              placeholder="Ingresa un resumen breve de la receta"
+              placeholder="Summary"
               type="text"
               value={payload.summary}
               onChange={handleInputChange}
+              className={s.input}
             />
             {errors.summary && <p>{errors.summary}</p>}
 
             <label text="healthScore" htmlFor="healthScore">
-              Saludable (puntaje):
+              healthScore:
             </label>
             <input
               name="healthScore"
@@ -128,6 +146,7 @@ const AddRecipe = () => {
               type="text"
               value={payload.healthScore}
               onChange={handleInputChange}
+              className={s.input}
             />
             {errors.healthScore && <p>{errors.healthScore}</p>}
 
@@ -142,8 +161,11 @@ const AddRecipe = () => {
                 type="text"
                 value={stepsInput}
                 onChange={handleStepInputChange}
+                className={s.input}
               />
-              <button onClick={addStep}>+</button>
+              <button onClick={addStep} className={s.btn1}>
+                +
+              </button>
               {errors.steps && <p>{errors.steps}</p>}
             </div>
           </div>
@@ -155,6 +177,7 @@ const AddRecipe = () => {
                     type="checkbox"
                     name={diet.name}
                     id={diet.id}
+                    className={s.checked}
                     checked={payload.diets.some((d) => d.id === diet.id)}
                     onChange={(e) => {
                       if (e.target.checked) {
@@ -173,12 +196,14 @@ const AddRecipe = () => {
                       }
                     }}
                   />
-                  <label htmlFor={diet.name}>{diet.name}</label>
+                  <label htmlFor={diet.name} className={s.container}>
+                    {diet.name}
+                  </label>
                 </div>
               );
             })}
           </div>
-          <button className={s.btn} type="submit">
+          <button className={s.btn} type="submit" >
             Crear Receta
           </button>
         </form>
