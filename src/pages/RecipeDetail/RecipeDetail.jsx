@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { cleanRecipe, getRecipeById } from "../../redux/actions";
+import { cleanRecipe, cleanStates, getRecipeById } from "../../redux/actions";
 
 import s from "./RecipeDetail.module.css";
 import Loading from "../../components/Loading/Loading";
 const RecipeDetail = () => {
-  const loadingDetail = useSelector((state) => state.loadingDetail);
+  const loading = useSelector((state) => state.loading);
   const { id } = useParams();
   const dispatch = useDispatch();
   const recipe = useSelector((state) => state.recipe);
@@ -17,13 +17,13 @@ const RecipeDetail = () => {
 
   const handleButton = (e) => {
     e.preventDefault();
-    dispatch(cleanRecipe());
+    dispatch(cleanStates());
     navigate("/home");
   };
 
   return (
     <div className={s.firstContainer}>
-      {loadingDetail ? (
+      {loading ? (
         <Loading />
       ) : (
           <div key={recipe.id} className={s.detailContainer}>

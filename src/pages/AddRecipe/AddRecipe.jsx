@@ -10,7 +10,6 @@ const AddRecipe = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const diets = useSelector((state) => state.diets);
-
   const [counter, setCounter] = useState(1);
   const [stepsInput, setStepsInput] = useState("");
   const [payload, setPayload] = useState({

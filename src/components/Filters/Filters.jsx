@@ -1,72 +1,144 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   aplhabeticalSort,
+  cleanRecipe,
   dietFilter,
   getDiets,
+  getRecipes,
   getRecipesFromApiorDB,
   scoreSort,
+  setLoading,
 } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./Filters.module.css";
 const Filters = () => {
   const diets = useSelector((state) => state.diets);
-
+  const searchKey = useSelector((state) => state.searchKey);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDiets());
   }, [dispatch]);
 
-  function handleDietTypeFilter(e) {
+  const [isDisabled, setIsDistabled] = useState({
+    alphabetical: false,
+    diets: false,
+    score: false,
+    source: false
+  });
+  
+  const alphabeticalRef = useRef(null);
+  const dietsRef = useRef(null);
+  const scoreRef = useRef(null);
+  const sourceRef = useRef(null);
+
+  const handleDietTypeFilter = (e) => {
     e.preventDefault();
     dispatch(dietFilter(e.target.value));
-  }
+    setIsDistabled({
+      ...isDisabled,
+      diets: !isDisabled.diets
+    });
+  };
 
-  function handleAlphabeticalSort(e) {
+  const handleAlphabeticalSort = (e) => {
     e.preventDefault();
     dispatch(aplhabeticalSort(e.target.value));
-  }
-  function handleScoreSort(e) {
+    setIsDistabled({
+      ...isDisabled,
+      alphabetical: !isDisabled.alphabetical
+    });
+  };
+  const handleScoreSort = (e) => {
     e.preventDefault();
     dispatch(scoreSort(e.target.value));
-  }
-  function handleSource(e) {
+    setIsDistabled({
+      ...isDisabled,
+      score: !isDisabled.score
+    });
+  };
+  const handleSource = (e) => {
     e.preventDefault();
     dispatch(getRecipesFromApiorDB(e.target.value));
-  }
+    setIsDistabled({
+      ...isDisabled,
+      source: !isDisabled.source
+    });
+  };
+
+  const resetFilters = (e) => {
+    e.preventDefault();
+    alphabeticalRef.current.value = "";
+    dietsRef.current.value = "";
+    scoreRef.current.value = "";
+    sourceRef.current.value = "";
+    setIsDistabled({
+      alphabetical: false,
+      diets: false,
+      score: false,
+      source: false
+    });
+
+    dispatch(setLoading(true));
+  };
+
 
   return (
     <div className={s.filtersContainer}>
       <label className={s.label}>Sort:</label>
-      <select name="alphabetical" onChange={(e) => handleAlphabeticalSort(e)} className={s.select}>
+      <select
+        name="alphabetical"
+        onChange={(e) => handleAlphabeticalSort(e)}
+        className={s.select}
+        ref={alphabeticalRef}
+        disabled={isDisabled.alphabetical}
+      >
         <option value="reset"></option>
         <option value="atoz">A to Z</option>
         <option value="ztoa">Z to A</option>
       </select>
       <label className={s.label}>Diets:</label>
-      <select name="diets" onChange={(e) => handleDietTypeFilter(e)} className={s.select}>
+      <select
+        name="diets"
+        onChange={(e) => handleDietTypeFilter(e)}
+        className={s.select}
+        ref={dietsRef}
+        disabled={isDisabled.diets}
+      >
         <option value="reset"></option>
-        {
-          diets?.map((diet) => {
-            return (
-              <option key={diet.id} value={diet.name}>
-                {diet.name}
-              </option>
-            );
-          })
-        }
+        {diets?.map((diet) => {
+          return (
+            <option key={diet.id} value={diet.name}>
+              {diet.name}
+            </option>
+          );
+        })}
       </select>
       <label className={s.label}>Health Score:</label>
-      <select name="score" onChange={(e) => handleScoreSort(e)} className={s.select}>
+      <select
+        name="score"
+        onChange={(e) => handleScoreSort(e)}
+        className={s.select}
+        ref={scoreRef}
+        
+        disabled={isDisabled.score}
+      >
         <option value="reset"></option>
         <option value="asc">Acendent</option>
         <option value="des">Descendent</option>
       </select>
       <label className={s.label}>Source:</label>
-      <select name="source" onChange={(e) => handleSource(e)} className={s.select}>
+      <select
+        name="source"
+        onChange={(e) => handleSource(e)}
+        className={s.select}
+        ref={sourceRef}
+        disabled={isDisabled.source}
+      >
         <option value="reset"></option>
         <option value="api">Api</option>
         <option value="db">Db</option>
       </select>
+      <button onClick={resetFilters} className={s.btn}> reset filters</button>
     </div>
   );
 };

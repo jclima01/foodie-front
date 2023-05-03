@@ -12,77 +12,22 @@ import {
   SCORE_SORT,
   GET_RECIPES_FROM_DB_OR_DB,
   CLEAN_RECIPE,
+  SET_LOADING,
+  CLEAN_STATES,
 } from "../actions";
 
 const initialState = {
-  allRecipes: [],
   recipes: [],
   diets: [],
   recipe: {},
   searchKey: "",
-  recipesFromApi: [],
-  recipesFromDB: [],
   loading: true,
-  loadingDetail: true,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case CLEAN_RECIPE:
-      return{
-        ...state,
-        recipe: {},
-        loading: true,
-        loadingDetail: true
-      }
-    case SCORE_SORT:
-      let sortedByScore = [...state.recipes];
-      if (payload === "reset") {
-        return {
-          ...state,
-          recipes: [...state.allRecipes],
-        };
-      }
-      sortedByScore =
-        payload === "asc"
-          ? state.recipes.sort(function (a, b) {
-              if (a.healthScore > b.healthScore) return 1;
-              if (a.healthScore < b.healthScore) return -1;
-              return 0;
-            })
-          : state.recipes.sort(function (a, b) {
-              if (a.healthScore < b.healthScore) return 1;
-              if (a.healthScore > b.healthScore) return -1;
-              return 0;
-            });
-      return {
-        ...state,
-        recipes: [...sortedByScore],
-      };
-    case DIET_FILTER:
-      const recipes = [...state.recipes];
-      const filteredByDietType = recipes.filter((r) =>
-        r.diets?.some((d) => d.toLowerCase() === payload.toLowerCase())
-      );
-      if (payload === "reset") {
-        return {
-          ...state,
-          recipes: [...state.allRecipes],
-        };
-      }
-      return {
-        ...state,
-        recipes: [...filteredByDietType],
-      };
-
     case ALPHABETICAL_SORT:
       let sortedRecipes = [...state.recipes];
-      if (payload === "reset") {
-        return {
-          ...state,
-          recipes: [...state.allRecipes],
-        };
-      }
       sortedRecipes =
         payload === "atoz"
           ? sortedRecipes.sort(function (a, b) {
@@ -99,6 +44,54 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         recipes: [...sortedRecipes],
       };
+    case DIET_FILTER:
+      const recipes = [...state.recipes];
+      const filteredByDietType = recipes.filter((r) =>
+        r.diets?.some((d) => d.toLowerCase() === payload.toLowerCase())
+      );
+      return {
+        ...state,
+        recipes: [...filteredByDietType],
+      };
+
+    case SCORE_SORT:
+      let sortedByScore = [...state.recipes];
+      sortedByScore =
+        payload === "asc"
+          ? state.recipes.sort(function (a, b) {
+              if (a.healthScore > b.healthScore) return 1;
+              if (a.healthScore < b.healthScore) return -1;
+              return 0;
+            })
+          : state.recipes.sort(function (a, b) {
+              if (a.healthScore < b.healthScore) return 1;
+              if (a.healthScore > b.healthScore) return -1;
+              return 0;
+            });
+
+      return {
+        ...state,
+        recipes: [...sortedByScore],
+      };
+
+    case GET_RECIPES_FROM_DB_OR_DB:
+      const allrecipes = [...state.recipes];
+      const filtredByApi = allrecipes.filter((r) => r.source === "api");
+      const filtredByDB = allrecipes.filter((r) => r.source === "db");
+      if (payload === "api") {
+        return {
+          ...state,
+          recipes: [...filtredByApi],
+        };
+      }
+      if (payload === "db") {
+        return {
+          ...state,
+          recipes: [...filtredByDB],
+        };
+      }
+      break;
+
     case SET_SEARCH_KEY:
       return {
         ...state,
@@ -108,20 +101,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         recipes: [...payload],
-        allRecipes: [...payload],
         loading: false,
       };
     case ADD_RECIPE:
       return {
         ...state,
-        recipes: [...state.recipes],
-        allRecipes: [...state.recipes],
       };
     case GET_DIETS:
       return {
         ...state,
         diets: [...payload],
-        loading: false,
       };
     case GET_RECIPES_BY_QUERY:
       return {
@@ -133,34 +122,26 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         recipe: { ...payload },
-        loadingDetail: false,
+        loading: false,
       };
-    case GET_RECIPES_FROM_DB_OR_DB:
-      const allRecipes = [...state.allRecipes];
-      const recipesFromApi = allRecipes.filter((r) => r.source === "api");
-      const recipesFromDb = allRecipes.filter((r) => r.source === "db");
-      if (payload === "reset") {
-        return {
+    case CLEAN_RECIPE:
+      return {
+        ...state,
+        recipe: {},
+      };
+      case SET_LOADING:
+        return{
           ...state,
-          recipes: [...state.allRecipes],
-          loading: false,
-        };
-      }
-      if (payload === "api") {
+          loading: payload
+        }
+      case CLEAN_STATES:
         return {
-          ...state,
-          recipes: [...recipesFromApi],
-          loading: false,
-        };
-      }
-      if (payload === "db") {
-        return {
-          ...state,
-          recipes: [...recipesFromDb],
-          loading: false,
-        };
-      }
-      break;
+          recipes: [],
+          diets: [],
+          recipe: {},
+          searchKey: "",
+          loading: true,
+        }
     default:
       return {
         ...state,

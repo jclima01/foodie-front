@@ -8,17 +8,15 @@
   margin-left: 5px;
 }
 .btn {
-  border-radius: 4px;
-  font-style: bold;
-  width: 200px;
-  height: 30px;
+  font-weight: 700;
+  box-sizing: border-box;
+  border: 0.5px solid #00000046;
+  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.253);
+  border-radius: 0.3em;
   background: #ec9595a4;
   cursor: pointer;
-
-  font-weight: 700;
-  font-size: 15px;
-  color: #1b1b1bd2;
 }
+
 .btn:hover {
   background: #bb36019f;
 }

@@ -1,9 +1,13 @@
 import React from "react";
 import s from "./RecipeCard.module.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../redux/actions";
 const RecipeCard = ({ recipe }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleNavigate = () => {
+    dispatch(setLoading(true))
     navigate(`/detail/${recipe.id}`);
   };
   return (

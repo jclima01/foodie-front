@@ -11,6 +11,8 @@ export const ALPHABETICAL_SORT = "ALPHABETICAL_SORT";
 export const SCORE_SORT = "SCORE_SORT";
 export const GET_RECIPES_FROM_DB_OR_DB = "GET_RECIPES_FROM_DB_OR_DB";
 export const CLEAN_RECIPE = "CLEAN_RECIPE";
+export const SET_LOADING = "SET_LOADING";
+export const CLEAN_STATES = "CLEAN_STATES";
 
 export const setSearchKey = (searchKey) => {
   try {
@@ -29,7 +31,6 @@ export const setSearchKey = (searchKey) => {
 export const getRecipes = () => {
   try {
     return async function (dispatch) {
-
       const response = await axios.get(
         "https://foodie-back-5zy4.onrender.com/recipes"
       );
@@ -46,7 +47,6 @@ export const getRecipes = () => {
 export const addRecipe = (title, image, summary, steps, healthScore, diets) => {
   try {
     return async function (dispatch) {
-
       await axios.post("https://foodie-back-5zy4.onrender.com/recipes", {
         title,
         image,
@@ -68,7 +68,6 @@ export const addRecipe = (title, image, summary, steps, healthScore, diets) => {
 export const getDiets = () => {
   try {
     return async function (dispatch) {
-
       const { data } = await axios.get(
         "https://foodie-back-5zy4.onrender.com/diets"
       );
@@ -85,7 +84,6 @@ export const getDiets = () => {
 export const getRecipesByQuery = (searchKey) => {
   try {
     return async function (dispatch) {
-
       const { data } = await axios.get(
         `https://foodie-back-5zy4.onrender.com/recipes?query=${searchKey}`
       );
@@ -103,7 +101,6 @@ export const getRecipesByQuery = (searchKey) => {
 export const getRecipeById = (id) => {
   try {
     return async function (dispatch) {
-
       const { data } = await axios.get(
         `https://foodie-back-5zy4.onrender.com/recipes/${id}`
       );
@@ -171,10 +168,34 @@ export const getRecipesFromApiorDB = (payload) => {
 export const cleanRecipe = (id) => {
   try {
     return async function (dispatch) {
-
       return dispatch({
         type: CLEAN_RECIPE,
+      });
+    };
+    // eslint-disable-next-line no-unreachable
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+export const setLoading = (boolean) => {
+  try {
+    return async function (dispatch) {
+      return dispatch({
+        type: SET_LOADING,
+        payload: boolean,
+      });
+    };
+    // eslint-disable-next-line no-unreachable
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const cleanStates = () => {
+  try {
+    return async function (dispatch) {
+      return dispatch({
+        type: CLEAN_STATES,
       });
     };
     // eslint-disable-next-line no-unreachable
